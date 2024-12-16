@@ -1,0 +1,18 @@
+
+#tytul{
+	position:fixed;
+	margin-left: 40px;
+	margin-right: 5px;
+	width: 300px;
+	height: 50px;
+	background-color: white;
+	opacity: 0.8;
+	border: transparent;
+	z-index: 500;
+	text-align:center;
+	line-height: 25px;
+	font-size: 16px;
+	font-family: Arial, Helvetica, sans-serif,bold;
+}
+
+	
