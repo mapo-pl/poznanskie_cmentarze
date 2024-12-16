@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang='pl'>
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>poznańskie cmentarze</title>
+	<style>
+	html, body, #map{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	background-color: lightgray;
+	}
+
+	</style>
+    
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+	<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" ></script>
+	
+	<!--stylizacja w css elementów leaflet-->
+    <link rel="stylesheet" href="./leaflet\leaflet.css" />
+    <script src="./leaflet/leaflet.js"></script>
+	<!--stylizacja w css tytułu mapy-->
+    <link rel="stylesheet" href="./style.css" type="text/css"/>
+    
+	<!--pliki źródłowe-->
+	<script src="./komunalny.js"></script>
+	<script src="./francuski.js"></script>
+	<script src="./prawosławny.js"></script>
+	<script src="./rzymskokatolicki.js"></script>
+	<script src="./wojskowy.js"></script>
+	<script src="./zydowski.js"></script>
+	<script src="./ewangelicki.js"></script>
+	<script src="./epidemiczny.js"></script>
+	<script src="./twierdza_poligonalna_poznan.js"></script>
+	<script src="./twierdza_fortowa_poznan.js"></script>
+	<script src="./cmentrze_bdot.js"></script>
+	<script src="./granica_poznan_1925.js"></script>
+	<script src="./granica_poznan_1933.js"></script>
+	<script src="./granica_poznan_1940.js"></script>
+	<script src="./granica_poznan_1973.js"></script>
+	<script src="./granica_poznan_1986.js"></script>
+	<script src="./granica_poznan_2024.js"></script>
+	<script src="./messtischeblatt_1911_1919.js"></script>
+	<script src="./mapa_wig_1933_1936.js"></script>
+	<script src="./messtischeblatt_1941_1944.js"></script>
+	<script src="./mapa_sgwp_1956.js"></script>
+	<script src="./lata_do_1500.js"></script>
+	<script src="./lata_1501_1792.js"></script>
+	<script src="./lata_1793_1919.js"></script>
+	<script src="./lata_1920_1945.js"></script>
+	<script src="./lata_od_1946.js"></script>
+	
+	
+	
+	<!--mini mapa - wtyczka-->
+	 <link rel="stylesheet" href="Leaflet-MiniMap-master\src\Control.MiniMap.css"/>
+    <script src ="Leaflet-MiniMap-master\src\Control.MiniMap.js"></script>
+    
+	<!--wyszukiwarka - wtyczka-->
+    <link rel="stylesheet" href="leaflet-search-master\dist\leaflet-search.src.css"/>
+    <script src ="leaflet-search-master\dist\leaflet-search.src.js"></script>
+	
+	<!--pełen ekran - wtyczka-->
+	<link rel="stylesheet" href="./Leaflet.fullscreen/leaflet.fullscreen.css"/>
+	<script src="./Leaflet.fullscreen/Leaflet.fullscreen.min.js"></script>
+	
+	<!--skala liniowa - wtyczka-->
+	<link rel="stylesheet" href="./Leaflet.GraphicScale/Leaflet.GraphicScale.min.css"/>
+	<script src="./Leaflet.GraphicScale/Leaflet.GraphicScale.min.js"></script>
+	
+	<!--pomiary-->
+	<link rel="stylesheet" href="./Leaflet.Measure/Control.Measure.css"/>
+	<script src="./Leaflet.Measure/Control.Measure.js"></script>
+	
+  </head>
+  
+  <body>
+  <div id="tytul"> <h2>Poznańskie cmentarze</h2>
+	</div>
+  
+  <div id="map">
+  </div>
+  
+  <script>
+  
+  
+	var map = L.map('map',{fullscreenControl: true, zoomControl: true, minZoom: 11, maxZoom: 18 }).setView([52.39283600549917, 16.91667498031817], 12);
+ 
+	//skala liniowa - wizualizacja
+	var graphicScale = L.control.graphicScale({fill:'line',doubleLine:'true'}).addTo(map);
+  
+	//wyszukiwarka - przeszukiwane warstwy
+	searchLayer =L.geoJson[(ewangelicki),(francuski),(rzymskokatolicki),(epidemiczny),(komunalny),(prawosławny),(zydowski),(wojskowy)]; 
+  
+
+	//symbole punktowe i powierzchniowe
+	var ewan_syg = L.icon({
+	iconUrl: './ewan_syg.svg', 
+	iconSize: [25, 25],
+	});
+ 
+	var rzym_syg = L.icon({
+	iconUrl: './rzym_syg.svg', 
+	iconSize: [25, 25],
+	});
+	
+	var fran_syg = L.icon({
+	iconUrl: './fran_syg.svg', 
+	iconSize: [25, 25],
+	});
+ 
+	var komu_syg = L.icon({
+	iconUrl: './komu_syg.svg', 
+	iconSize: [25, 25],
+	});
+ 
+	var zydo_syg = L.icon({
+	iconUrl: './zydo_syg.svg', 
+	iconSize: [25, 25],
+	});
+ 
+	var epid_syg = L.icon({
+	iconUrl: './epid_syg.svg', 
+	iconSize: [25, 25],
+	});
+ 
+	var wojs_syg = L.icon({
+	iconUrl: './wojs_syg.svg', 
+	iconSize: [25, 25],
+	});
+ 
+	var praw_syg = L.icon({
+	iconUrl: './praw_syg.svg', 
+	iconSize: [25, 25],
+	});
+ 
+	 
+	var red_pp = L.icon({
+	iconUrl: './red_pp.svg', 
+	iconSize: [15, 15],
+	});	
+ 
+	var red_pc = L.icon({
+	iconUrl: './red_pc.svg', 
+	iconSize: [15, 15],
+	});	
+	
+	var blue_pp = L.icon({
+	iconUrl: './blue_pp.svg', 
+	iconSize: [15, 15],
+	});	
+	
+	var blue_pc = L.icon({
+	iconUrl: './blue_pc.svg', 
+	iconSize: [15, 15],
+	});	
+	
+	var black_pp = L.icon({
+	iconUrl: './black_pp.svg', 
+	iconSize: [15, 15],
+	});	
+	
+	var black_pc = L.icon({
+	iconUrl: './black_pc.svg', 
+	iconSize: [15, 15],
+	});	
+	
+	var green_pp = L.icon({
+	iconUrl: './green_pp.svg', 
+	iconSize: [15, 15],
+	});	
+	
+	var green_pc = L.icon({
+	iconUrl: './green_pc.svg', 
+	iconSize: [15, 15],
+	});
+	
+	var orange_pp = L.icon({
+	iconUrl: './orange_pp.svg', 
+	iconSize: [15, 15],
+	});	
+	
+	var orange_pc = L.icon({
+	iconUrl: './orange_pc.svg', 
+	iconSize: [15, 15],
+	});	
+	
+	var purple_pp = L.icon({
+	iconUrl: './purple_pp.svg', 
+	iconSize: [15, 15],
+	});	
+	
+	var twierdza = L.icon({
+	iconUrl: './twierdza.svg', 
+	iconSize: [15, 15],
+	});	
+	
+	var red_c = L.icon({
+	iconUrl: './red_c.svg', 
+	iconSize: [45, 45],
+	});	
+ 
+	var blue_c = L.icon({
+	iconUrl: './blue_c.svg', 
+	iconSize: [45, 45],
+	});	
+	
+	var green_c = L.icon({
+	iconUrl: './green_c.svg', 
+	iconSize: [45, 45],
+	});	
+	
+	var orange_c = L.icon({
+	iconUrl: './orange_c.svg', 
+	iconSize: [45, 45],
+	});	
+	
+	var black_c = L.icon({
+	iconUrl: './black_c.svg', 
+	iconSize: [45, 45],
+	});	
+	
+ 
+	//mapy bazowe
+	var osmLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>',
+     otmLink = '<a href="http://opentopomap.org/">OpenTopoMap</a>',
+	 gray_mapLink = '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+        
+   var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+       osmAttrib = '&copy; ' + osmLink + ' Contributors',
+       otmUrl = 'http://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+       otmAttrib = '&copy; '+otmLink+' Contributors',
+	   gray_mapUrl = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+       gray_mapAttrib = '&copy; '+gray_mapLink+' Contributors';
+  
+   var osmMap = L.tileLayer(osmUrl, {attribution: osmAttrib}),
+       otmMap = L.tileLayer(otmUrl, {attribution: otmAttrib}),
+		gray_mapMap = L.tileLayer(gray_mapUrl, {attribution: gray_mapAttrib});
+
+	var podklad = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+	});
+
+	//szara mapa - mapa startowa
+	var gray_map = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+	}).addTo(map);
+
+
+	//mini mapa - połączenie z mapą bazową + lokalizacja w oknie mapy + przycisk zamykający
+    basemapUrl='https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+    var basemap= new L.TileLayer(basemapUrl, {minZoom: 8, maxZoom: 18});
+    var minMap= new L.Control.MiniMap(basemap,{width:230, position:'bottomleft',toggleDisplay: true}).addTo(map);
+
+	
+
+	//rastry mapy Messtischeblatt 1911-1919
+	var raster1 = L.imageOverlay(
+	'./sady_1911_wgs_cut.webp',[[52.3787365290000011,16.6417591169999994],[52.5099435180000000,16.8457550289999993]],{Opacity:0.5});
+	
+	var raster2 = L.imageOverlay(
+	'./posen_nord_1916_wgs_cut.webp',[[52.3808647996800474,16.8157341770463695],[52.5128757664310797,17.0111684122711608]],{Opacity:0.5});
+	
+	var raster3 = L.imageOverlay(
+	'./posen_sud_1919_wgs_cut.webp',[[52.2827485438189399,16.8190109717775194],[52.4103174083581393,17.0157862010807612]],{Opacity:0.5});
+	
+	var raster4 = L.imageOverlay(
+	'./schwersenz_1911_wgs_cut.webp',[[52.3849088526448128,16.9806553996963565],[52.5116235828641891,17.1801714265978731]],{Opacity:0.5});
+	
+	var raster5 = L.imageOverlay(
+	'./gondek_1913_wgs_cut.webp',[[52.2852757372866677,16.9833370515714108],[52.4096914445767155,17.1778681729368046]],{Opacity:0.5});
+	
+	var raster6 = L.imageOverlay(
+	'./dombrowka_1911_wgs_cut.webp',[[52.2844470470446012,16.6398515325503702],[52.4116760509602173,16.8519260916789619]],{Opacity:0.5});
+	
+	//rastry mapy WIG 1933-1936
+	var raster10 = L.imageOverlay(
+	'./P39-S23-C_KIEKRZ_1936_wgs_cut.webp',[[52.3911637789743239,16.6342870737193529],[52.5130159625038146,16.8507876650465356]],{Opacity:0.5});
+	
+	var raster11 = L.imageOverlay(
+	'./P39-S24-A_POZNAN_POLNOC_1933_wgs_cut.webp',[[52.3925915248656224,16.8019275628216107],[52.5147151413690594,17.0182775267479585]],{Opacity:0.5});
+	
+	var raster12 = L.imageOverlay(
+	'./P39-S24-B_KOBYLNICA_1933_wgs_cut.webp',[[52.3932522149138222,16.9700814580364785],[52.5122941859853043,17.1851172740156919]],{Opacity:0.5});
+	
+	var raster13 = L.imageOverlay(
+	'./P39-S24-D_POZNAN_POLUDNIE_1933_wgs_cut.webp',[[52.3100864741894398,16.8016337615541076],[52.4306137075620740,17.0165045882422703]],{Opacity:0.5});
+	
+	var raster14 = L.imageOverlay(
+	'./P39-S24-E_SWARZEDZ_1933_wgs_cut.webp',[[52.3096422098006002,16.9715380005296197],[52.4287397066265228,17.1830090012968064]],{Opacity:0.5});
+	
+	var raster15 = L.imageOverlay(
+	'./P39-S24-G_PUSZCZYKOWO_1933_wgs_cut.webp',[[52.2294851779878044,16.7930974943087570],[52.3470153926824224,17.0166504995763859]],{Opacity:0.5});
+	
+	var raster16 = L.imageOverlay(
+	'./P39-S23-F_LAWICA_1936_wgs_cut.webp',[[52.3096771882424108,16.6352829308957411],[52.4304703054539019,16.8506971016093487]]);
+    
+    
+    //rastry mapy Messtischeblatt 1941-1944
+	var raster30 = L.imageOverlay(
+	'./3567_Posen-Nord_1941_BYU_wgs_cut.webp',[[52.3786763919643619,16.8163312391851356],[52.5137452423113018,17.0318936911508487]],{Opacity:0.5});
+    
+    var raster31 = L.imageOverlay(
+	'./3568_Schwersenz_IX.1944_wgs_cut.webp',[[52.3715299076191627,16.9773831104589341],[52.5188260730694836,17.2077248228383333]],{Opacity:0.5});
+    
+    var raster32 = L.imageOverlay(
+	'./3666_Dombrowka_IX.1944_wgs_cut.webp',[[52.2706276971288233,16.6427623808645997],[52.4191749489200731,16.8733517065890979]],{Opacity:0.5});
+    
+    var raster33 = L.imageOverlay(
+	'./3667_Posen_Sud_1944_wgs_cut.webp',[[52.2779949991143127,16.8190321392087796],[52.4147004921808488,17.0288101899159727]],{Opacity:0.5});
+	
+	var raster34 = L.imageOverlay(
+	'./3566_Sady_IX.1944_wgs_cut.webp',[[52.3704926204893439,16.6431251730835221],[52.5188036006266969,16.8758776855537604]],{Opacity:0.5});
+	
+	var raster35 = L.imageOverlay(
+	'./3668_Gondek_1944_wgs_cut.webp',[[52.2712827301801966,16.9768156390450535],[52.4190156628334378,17.2066195428827449]],{Opacity:0.5});
+	
+	//rastry mapy SGWP 1956
+	
+	var raster20 = L.imageOverlay(
+	'./N-33-131-C-c_(SWARZEDZ)_1973_wgs_cut.webp',[[52.3174803360987397,16.9812171124461493],[52.4276846410402442,17.1347052120197283]]);
+	
+	var raster21 = L.imageOverlay(
+	'./N-33-130-D-d_(POZNAN)_1956_wgs_cut.webp',[[52.3224840690171575,16.8637554835214907],[52.4244266240847736,17.0119065923772119]]);
+	
+	var raster22 = L.imageOverlay(
+	'./N-33-130-D-c_(PLEWISKA)_1956_wgs_cut.webp',[[52.3210874370373276,16.7378475848911954],[52.4243648056087252,16.8823752387069703]]);
+	
+	var raster23 = L.imageOverlay(
+	'./N-33-130-D-b_(POZNAN_CZ_PLN-WSCH.)_1956_wgs_cut.webp',[[52.4051492089809017,16.8647824618661488],[52.5067714719143481,17.0120119252838045]]);
+	
+	var raster24 = L.imageOverlay(
+	'./N-33-130-D-a_(SMOCHOWICE)_1956_wgs_cut.webp',[[52.4047751770814187,16.7395022410992063],[52.5071664916599161,16.8817738663165819]]);
+	
+   
+	//warstwe punktowe - określenie ródła, sygnatury + treści popup
+	var warstwa_komunalny = L.geoJson(komunalny,{
+		pointToLayer: function(feature, latlng){
+				return L.marker(latlng,
+					{icon: komu_syg})
+					.bindPopup('<h3>'+feature.properties.Name+'</h3>'+feature.properties.tekst+'<h5>stan:</h5>'+feature.properties.stan+'<br><br><a href="'+feature.properties.link+'" target="_blank"<center><button>więcej szczegółów na e-lapidarium.pl</button></a>')}
+	}).addTo(map)
+	
+   
+	var warstwa_francuski = L.geoJson(francuski,{
+		pointToLayer: function(feature, latlng){
+				return L.marker(latlng,
+					{icon: fran_syg})
+					.bindPopup('<h3>'+feature.properties.Name+'</h3>'+feature.properties.tekst+'<h5>stan:</h5>'+feature.properties.stan+'<br><br><a href="'+feature.properties.link+'" target="_blank"<center><button>więcej szczegółów na e-lapidarium.pl</button></a>')}
+	}).addTo(map)
+	
+ 
+	var warstwa_prawosławny = L.geoJson(prawosławny,{
+		pointToLayer: function(feature, latlng){
+				return L.marker(latlng,
+					{icon: praw_syg})
+					.bindPopup('<h3>'+feature.properties.Name+'</h3>'+feature.properties.tekst+'<h5>stan:</h5>'+feature.properties.stan+'<br><br><a href="'+feature.properties.link+'" target="_blank"<center><button>więcej szczegółów na e-lapidarium.pl</button></a>')}
+	}).addTo(map)
+	
+	var warstwa_rzymskokatolicki = L.geoJson(rzymskokatolicki,{
+		pointToLayer: function(feature, latlng){
+				return L.marker(latlng,
+					{icon: rzym_syg})
+					.bindPopup('<h3>'+feature.properties.Name+'</h3>'+feature.properties.tekst+'<h5>stan:</h5>'+feature.properties.stan+'<br><br><a href="'+feature.properties.link+'" target="_blank"<center><button>więcej szczegółów na e-lapidarium.pl</button></a>')}
+	}).addTo(map)
+	
+	var warstwa_wojskowy = L.geoJson(wojskowy,{
+		pointToLayer: function(feature, latlng){
+				return L.marker(latlng,
+					{icon: wojs_syg})
+					.bindPopup('<h3>'+feature.properties.Name+'</h3>'+feature.properties.tekst+'<h5>stan:</h5>'+feature.properties.stan+'<br><br><a href="'+feature.properties.link+'" target="_blank"<center><button>więcej szczegółów na e-lapidarium.pl</button></a>')}
+	}).addTo(map)
+	
+	var warstwa_zydowski = L.geoJson(zydowski,{
+		pointToLayer: function(feature, latlng){
+				return L.marker(latlng,
+					{icon: zydo_syg})
+					.bindPopup('<h3>'+feature.properties.Name+'</h3>'+feature.properties.tekst+'<h5>stan:</h5>'+feature.properties.stan+'<br><br><a href="'+feature.properties.link+'" target="_blank"<center><button>więcej szczegółów na e-lapidarium.pl</button></a>')}
+	}).addTo(map)
+	
+	var warstwa_ewangelicki = L.geoJson(ewangelicki,{
+		pointToLayer: function(feature, latlng){
+				return L.marker(latlng,
+					{icon: ewan_syg})
+					.bindPopup('<h3>'+feature.properties.Name+'</h3>'+feature.properties.tekst+'<h5>stan:</h5>'+feature.properties.stan+'<br><br><a href="'+feature.properties.link+'" target="_blank"<center><button>więcej szczegółów na e-lapidarium.pl</button></a>')}
+	}).addTo(map)
+	
+	var warstwa_epidemiczny = L.geoJson(epidemiczny,{
+		pointToLayer: function(feature, latlng){
+				return L.marker(latlng,
+					{icon: epid_syg})
+					.bindPopup('<h3>'+feature.properties.Name+'</h3>'+feature.properties.tekst+'<h5>stan:</h5>'+feature.properties.stan+'<br><br><a href="'+feature.properties.link+'" target="_blank"<center><button>więcej szczegółów na e-lapidarium.pl</button></a>')}
+	}).addTo(map)
+	
+	var lata_od_1946 = L.geoJson(lata_od_1946, {
+		pointToLayer: function(feature, latlng){
+				return L.marker(latlng, {icon: black_c,interactive:false}
+	)}});
+	var lata_1920_1945 = L.geoJson(lata_1920_1945, {
+		pointToLayer: function(feature, latlng){
+				return L.marker(latlng, {icon: orange_c,interactive:false}
+	)}});
+	var lata_1793_1919 = L.geoJson(lata_1793_1919, {
+		pointToLayer: function(feature, latlng){
+				return L.marker(latlng, {icon: green_c,interactive:false}
+	)}});
+	var lata_1501_1792 = L.geoJson(lata_1501_1792, {
+		pointToLayer: function(feature, latlng){
+				return L.marker(latlng, {icon: blue_c,interactive:false}
+	)}});
+	var lata_do_1500 = L.geoJson(lata_do_1500, {
+		pointToLayer: function(feature, latlng){
+				return L.marker(latlng, {icon: red_c,interactive:false}
+	)}});
+			
+	//wartsry powierzniowe - określenie źródła i wyglądu sygnatur
+	var warstwa_messtischeblatt_1911_1919 = L.geoJson(messtischeblatt_1911_1919, {color: 'red', weight:'2', fillOpacity: '0'});
+	var warstwa_mapa_wig_1933_1936 = L.geoJson(mapa_wig_1933_1936, {color: 'blue', weight:'2', fillOpacity: '0'});
+	var warstwa_messtischeblatt_1941_1944 = L.geoJson(messtischeblatt_1941_1944, {color: 'green', weight:'2', fillOpacity: '0'});
+	var warstwa_mapa_sgwp_1956 = L.geoJson(mapa_sgwp_1956, {color: 'orange', weight:'2', fillOpacity: '0'});
+	var warstwa_cmentrze_bdot = L.geoJson(cmentrze_bdot, {color: 'black', weight:'2', fillOpacity: '0'}).addTo(map);
+	var warstwa_twierdza_poligonalna_poznan = L.geoJson(twierdza_poligonalna_poznan, {color: 'darkred',weight:'1', fillOpacity:'0.5' });
+	var warstwa_twierdza_fortowa_poznan = L.geoJson(twierdza_fortowa_poznan, {color: 'darkred',weight:'1', fillOpacity:'0.5' });
+	var warstwa_granica_poznan_2024 = L.geoJson(granica_poznan_2024, {color: 'black', fillOpacity: '0', dashArray: '10,10'}).addTo(map);
+	var warstwa_granica_poznan_1986 = L.geoJson(granica_poznan_1986, {color: 'purple', fillOpacity: '0', dashArray: '10,10'});
+	var warstwa_granica_poznan_1973 = L.geoJson(granica_poznan_1973, {color: 'orange', fillOpacity: '0', dashArray: '10,10'});
+	var warstwa_granica_poznan_1940 = L.geoJson(granica_poznan_1940, {color: 'green', fillOpacity: '0', dashArray: '10,10'});
+	var warstwa_granica_poznan_1933 = L.geoJson(granica_poznan_1933, {color: 'blue', fillOpacity: '0', dashArray: '10,10'});
+	var warstwa_granica_poznan_1925 = L.geoJson(granica_poznan_1925, {color: 'red', fillOpacity: '0', dashArray: '10,10'});
+	
+
+	// zgrupowanie warst rastrowych
+	var poznan_raster1 = L.layerGroup([raster1,raster2,raster3,raster4,raster5,raster6]);
+	var poznan_raster2 = L.layerGroup([raster10,raster11,raster12,raster13,raster14,raster15,raster16]);
+	var poznan_raster3 = L.layerGroup([raster20,raster21,raster22,raster23,raster24]);
+    var poznan_raster4 = L.layerGroup([raster30,raster31,raster32,raster33,raster34,raster35]);		
+
+	//granice mapy internetowej
+	var northWest = new L.LatLng(52.739479, 16.363250);
+    var southEast = new L.LatLng(52.102999, 17.372666);
+	var bounds = new L.LatLngBounds(northWest, southEast);
+	map.setMaxBounds(bounds);	
+	
+	// określenie map bazowych i nazw w legendzie interaktywnej
+	var baseLayers = {
+	   "OSM": osmMap,
+	   "Mapa topo": otmMap,
+	   "Szara mapa": gray_map,
+	    };
+
+	//określnie warstw i stylizacji w legendzie interaktywnej
+	var overlays = {
+	"<img src ='./rzym_syg.svg' width='18px'> cmentarz rzymskokatolicki": warstwa_rzymskokatolicki,
+	"<img src ='./zydo_syg.svg' width='18px'> cmentarz żydowski": warstwa_zydowski,
+	"<img src ='./ewan_syg.svg' width='18px'> cmentarz ewangelicki": warstwa_ewangelicki,
+	"<img src ='./praw_syg.svg' width='18px'> cmentarz prawosławny": warstwa_prawosławny,
+	"<img src ='./epid_syg.svg' width='18px'> cmentarz epidemiczny": warstwa_epidemiczny,
+	"<img src ='./fran_syg.svg' width='18px'> cmentarz francuski": warstwa_francuski,
+	"<img src ='./wojs_syg.svg' width='18px'> cmentarz wojskowy": warstwa_wojskowy,
+	"<img src ='./komu_syg.svg' width='18px'> cmentarz komunalny": warstwa_komunalny,
+	"<img src ='./black_c.svg' width='18px'> od 1946 roku": lata_od_1946,
+	"<img src ='./orange_c.svg' width='18px'> od 1920 do 1945 roku": lata_1920_1945,
+	"<img src ='./green_c.svg' width='18px'> od 1793 do 1919 roku": lata_1793_1919,
+	"<img src ='./blue_c.svg' width='18px'> od 1501 do 1792 roku": lata_1501_1792,
+	"<img src ='./red_c.svg' width='18px'> do 1500 roku": lata_do_1500,
+	"<img src ='./black_pc.svg' width='18px'> cmentarz istniejące obecnie": warstwa_cmentrze_bdot,
+	"<img src ='./orange_pc.svg' width='18px'> cmentarz (Mapa SGWP 1956)": warstwa_mapa_sgwp_1956,
+	"<img src ='./green_pc.svg' width='18px'> cmentarz (Messtischblatt 1941-1944)": warstwa_messtischeblatt_1941_1944,
+	"<img src ='./blue_pc.svg' width='18px'> cmentarz (Mapa WIG 1933-1936)": warstwa_mapa_wig_1933_1936,
+	"<img src ='./red_pc.svg' width='18px'> cmentarz (Messtischblatt 1911-1919)": warstwa_messtischeblatt_1911_1919,
+	"mapa SGWP 1956 (1973)": poznan_raster3,
+	"mapa Messtischeblatt 1941-1944": poznan_raster4,
+	"Mapa WIG 1933-1936": poznan_raster2,
+	"mapa Messtischeblatt 1911-1919": poznan_raster1,
+	"<img src ='./black_pp.svg' width='18px'> granica miasta w 2024 roku": warstwa_granica_poznan_2024,
+	"<img src ='./purple_pp.svg' width='18px'> granica miasta w 1986 roku": warstwa_granica_poznan_1986,
+	"<img src ='./orange_pp.svg' width='18px'> granica miasta w 1973 roku": warstwa_granica_poznan_1973,
+	"<img src ='./green_pp.svg' width='18px'> granica miasta w 1940 roku": warstwa_granica_poznan_1940,
+	"<img src ='./blue_pp.svg' width='18px'> granica miasta w 1933 roku": warstwa_granica_poznan_1933,
+	"<img src ='./red_pp.svg' width='18px'> granica miasta w 1925 roku": warstwa_granica_poznan_1925,
+	"<img src ='./twierdza.svg' width='18px'> twierdza poligonalna": warstwa_twierdza_poligonalna_poznan,
+	"<img src ='./twierdza.svg' width='18px'> twierdza fortowa": warstwa_twierdza_fortowa_poznan,
+	};
+	
+	//legenda interaktywna (otwarta)
+	L.control.layers(baseLayers, overlays,{collapsed:false}).addTo(map);
+	
+	//wyszukiwarka - zgrupowanie warstw do wyszukiwania
+    var warstwa_szukanie = L.layerGroup([
+		warstwa_epidemiczny,warstwa_francuski,warstwa_ewangelicki,warstwa_komunalny,warstwa_prawosławny,warstwa_rzymskokatolicki,warstwa_wojskowy,warstwa_zydowski
+	])
+	.addTo(map);
+	
+	//okno wyszukiwarki - wyszukiwanie po nazwie
+	L.control.search({
+		layer: warstwa_szukanie,
+		initial: false,
+        zoom:16,
+		propertyName: 'Name'
+		})
+	.addTo(map);
+	
+	//pomiar odległości
+	L.control.measure().addTo(map);
+	
+  </script>
+
+  </body>
+  
+</html>
