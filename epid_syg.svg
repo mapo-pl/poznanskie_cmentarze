@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="17.800003mm"
+   height="17.799995mm"
+   viewBox="0 0 17.800003 17.799995"
+   version="1.1"
+   id="svg1"
+   inkscape:export-filename="dot.svg"
+   inkscape:export-xdpi="300"
+   inkscape:export-ydpi="300"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   sodipodi:docname="all dots.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="1.4164563"
+     inkscape:cx="579.26251"
+     inkscape:cy="333.57896"
+     inkscape:window-width="1920"
+     inkscape:window-height="991"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Warstwa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-120.39324,-114.44587)">
+    <g
+       id="g12">
+      <rect
+         style="fill:#585858;fill-opacity:1;stroke:#000000;stroke-width:1.1;stroke-linecap:square;stroke-dasharray:none;paint-order:fill markers stroke"
+         id="rect2-9-1"
+         width="16.700001"
+         height="16.699999"
+         x="120.94324"
+         y="114.99587"
+         ry="0.5"
+         rx="0.5" />
+      <g
+         id="g11"
+         transform="translate(-25.359772,0.19812193)">
+        <path
+           style="fill:none;stroke:#ff0000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+           d="m 154.65301,116.28313 v 13.72924"
+           id="path2-9-7" />
+        <path
+           style="fill:none;stroke:#ff0000;stroke-width:2.00001;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+           d="m 151.3391,119.35953 h 6.62782"
+           id="path3-6-2" />
+        <path
+           style="fill:none;stroke:#ff0000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+           d="m 150.59027,123.14775 h 8.12548"
+           id="path3-6-0-1" />
+      </g>
+    </g>
+  </g>
+</svg>
