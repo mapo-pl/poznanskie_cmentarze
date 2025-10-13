@@ -52,8 +52,8 @@
 	<script src="./lata_1793_1919.js"></script>
 	<script src="./lata_1920_1945.js"></script>
 	<script src="./lata_od_1946.js"></script>
-	
-	
+	<script src="./granica_cmentarza_egib.js"></script>
+	<script src="./dzialki_ewidencyjne_egib.js"></script>
 	
 	<!--mini mapa - wtyczka-->
 	 <link rel="stylesheet" href="Leaflet-MiniMap-master\src\Control.MiniMap.css"/>
@@ -75,14 +75,17 @@
 	<link rel="stylesheet" href="./Leaflet.Measure/Control.Measure.css"/>
 	<script src="./Leaflet.Measure/Control.Measure.js"></script>
 	
-    <!link do lokalizacji>
+	<!--przycisk info-->
+    <link rel="stylesheet" href="./leaflet.infoButton/leaflet.infoButton.css" />
+	<script src="./leaflet.infoButton/leaflet.infoButton.js"></script>
+	
+	
+    <!--link do lokalizacji-->
 	<link rel="stylesheet" href="./Leaflet.Control.Locate/L.Control.Locate.css"/>
 	<script src="./Leaflet.Control.Locate/L.Control.Locate.js"></script>
 	
-	<!to jest link do łezki z lokalizacji>
+	<!--to jest link do łezki z lokalizacji-->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    
-    
     
     
   </head>
@@ -97,7 +100,7 @@
   <script>
   
   
-	var map = L.map('map',{fullscreenControl: true, zoomControl: true, minZoom: 11, maxZoom: 18 }).setView([52.39283600549917, 16.91667498031817], 12);
+	var map = L.map('map',{fullscreenControl: true, zoomControl: true, minZoom: 11, maxZoom:18 }).setView([52.39283600549917, 16.91667498031817], 12);
  
 	//skala liniowa - wizualizacja
 	var graphicScale = L.control.graphicScale({fill:'line',doubleLine:'true'}).addTo(map);
@@ -105,7 +108,17 @@
 	//wyszukiwarka - przeszukiwane warstwy
 	searchLayer =L.geoJson[(ewangelicki),(francuski),(rzymskokatolicki),(epidemiczny),(komunalny),(prawosławny),(zydowski),(wojskowy)]; 
   
-
+   //Popup z informacjami o aplikacji i autorstwie
+		
+		var o_apce = L.DomUtil.create('div');
+		
+		o_apce.id = "o_apce"
+		
+		o_apce.innerHTML = "<p = >Mapa internetowa prezentuje.....</p> <p>Mapa internetowa powstała w ramach pracy inżynierskiej...</p> <p>Mail kontaktowy: mapo.pl.gis@gmail.com</p>"
+		
+		var infoButton = L.control.infoButton({linkTitle: 'Informacja', title: '<h2>Krótko o mapie internetowej</h2>', position: 'bottomleft', html: o_apce.innerHTML}).addTo(map);
+  
+ 
 	//symbole punktowe i powierzchniowe
 	var ewan_syg = L.icon({
 	iconUrl: './ewan_syg.svg', 
@@ -264,7 +277,7 @@
     
     //mini mapa - połączenie z mapą bazową + lokalizacja w oknie mapy + przycisk zamykający
     basemapUrl='https://tile.openstreetmap.org/{z}/{x}/{y}.png'
-    var basemap= new L.TileLayer(basemapUrl, {minZoom: 8, maxZoom: 18});
+    var basemap= new L.TileLayer(basemapUrl, {minZoom: 8, maxZoom:18});
     if (screenWidth>600){
         var minMap= new L.Control.MiniMap(basemap,{width:230, position:'bottomleft',toggleDisplay: true}).addTo(map)}
     else{
@@ -444,6 +457,13 @@
 	var warstwa_granica_poznan_1940 = L.geoJson(granica_poznan_1940, {color: 'green', fillOpacity: '0', dashArray: '10,10'});
 	var warstwa_granica_poznan_1933 = L.geoJson(granica_poznan_1933, {color: 'blue', fillOpacity: '0', dashArray: '10,10'});
 	var warstwa_granica_poznan_1925 = L.geoJson(granica_poznan_1925, {color: 'red', fillOpacity: '0', dashArray: '10,10'});
+	var granica_cmentarza_egib = L.geoJson(granica_cmentarza_egib, {color: 'darkred',weight:'3', fillOpacity: '0', dashArray: '10,1,10'});
+	var dzialki_ewidencyjne_egib = L.geoJson(dzialki_ewidencyjne_egib, {color: 'darkred',weight:'0.5', fillOpacity: '0',onEachFeature:popupdzialki_ewidencyjne});
+	
+	//popup dane ewidencyjne działek
+	function popupdzialki_ewidencyjne(feature, layer){
+	layer.bindPopup('<b>Dane ewidencyjne: </b>'+'<br><b>Obręb: </b>'+feature.properties.obręb+'<br><b>Arkusz: </b>'+feature.properties.arkusz+'<br><b>Działka: </b>'+feature.properties.działka+'<br><b>Powierzchnia: </b>'+feature.properties.pow+' m2')}
+	
 	
 
 	// zgrupowanie warst rastrowych
@@ -485,10 +505,12 @@
 	"<img src ='./green_pc.svg' width='18px'> cmentarz (Messtischblatt 1941-1944)": warstwa_messtischeblatt_1941_1944,
 	"<img src ='./blue_pc.svg' width='18px'> cmentarz (Mapa WIG 1933-1936)": warstwa_mapa_wig_1933_1936,
 	"<img src ='./red_pc.svg' width='18px'> cmentarz (Messtischblatt 1911-1919)": warstwa_messtischeblatt_1911_1919,
+	"<img src ='./darkred_pp.svg' width='18px'> granica cmentarza [EGIB]": granica_cmentarza_egib,
+	"<img src ='./darkred_pc.svg' width='18px'> działki ewidencyjne [EGIB]": dzialki_ewidencyjne_egib,
 	"mapa SGWP 1956 (1973)": poznan_raster3,
-	"mapa Messtischeblatt 1941-1944": poznan_raster4,
+	"mapa Messtischblatt 1941-1944": poznan_raster4,
 	"Mapa WIG 1933-1936": poznan_raster2,
-	"mapa Messtischeblatt 1911-1919": poznan_raster1,
+	"mapa Messtischblatt 1911-1919": poznan_raster1,
 	"<img src ='./black_pp.svg' width='18px'> granica miasta w 2024 roku": warstwa_granica_poznan_2024,
 	"<img src ='./purple_pp.svg' width='18px'> granica miasta w 1986 roku": warstwa_granica_poznan_1986,
 	"<img src ='./orange_pp.svg' width='18px'> granica miasta w 1973 roku": warstwa_granica_poznan_1973,
