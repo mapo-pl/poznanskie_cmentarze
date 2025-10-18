@@ -91,7 +91,8 @@
   </head>
   
   <body>
-  <div id="tytul"> <h2>Poznańskie cmentarze</h2>
+  <!-- styl tytyłu w osobnym pliku style-->
+  <div id="tytul"> <h2>POZNAŃSKIE CMENTARZE</h2>
 	</div>
   
   <div id="map">
@@ -114,7 +115,7 @@
 		
 		o_apce.id = "o_apce"
 		
-		o_apce.innerHTML = "<p>Prezentowana tematyczna mapa internetowa jest wynikiem pracy inżynierskiej Marcina Popławskiego zrealizowanej pod opieką dr Tymoteusza Horbińskiego, na kierunku Geodezja i kartografia, Wydziału Nauk Geograficznych i Geologicznych UAM. Powstała w celu uzupełnienia o nowoczesną formę kartograficzną strony internetowej Cyfrowe Lapidarium Poznania, poświęconej historycznym cmentarzom miasta Poznania. Mapa dostępna jest dla urządzeń stacjonarnych i mobilnych przez co pozwala na wejście w interakcję z obecną przestrzenią miejską i tworzy wirtualny przewodnik po nieistniejących już miejscach. Interaktywna legenda pozwala na dowolne komponowanie treści kartograficznej i analizę elementów historycznego krajobrazu.</p> <p> ©Marcin Popławski, kontakt: mapo.pl.gis@gmail.com</p>"
+		o_apce.innerHTML = "<p>Prezentowana tematyczna mapa internetowa jest wynikiem pracy inżynierskiej autorstwa Marcina Popławskiego, zrealizowanej pod opieką dr. Tymoteusza Horbińskiego, na kierunku Geodezja i kartografia Wydziału Nauk Geograficznych i Geologicznych UAM. Powstała w celu uzupełnienia o nowoczesną formę kartograficzną projektu Cyfrowe Lapidarium Poznania | <a href=https://e-lapidarium.pl/>e-lapidarium.pl</a>, poświęconego historycznym cmentarzom miasta Poznania. <br>Mapa dostępna jest dla urządzeń stacjonarnych i mobilnych; pozwala na wejście w interakcję ze współczesną przestrzenią miejską, tworząc wirtualny przewodnik po nieistniejących już obiektach. Interaktywna legenda umożliwia dowolne komponowanie treści kartograficznej i analizę elementów historycznego krajobrazu.</p> <p> Opracowanie: © Marcin Popławski 2025. <br>Kontakt: mapo.pl.gis@gmail.com</p>"
 		
 		var infoButton = L.control.infoButton({linkTitle: 'Informacja', title: '<h2>O mapie</h2>', position: 'bottomleft', html: o_apce.innerHTML}).addTo(map);
   
@@ -481,8 +482,8 @@
 	// określenie map bazowych i nazw w legendzie interaktywnej
 	var baseLayers = {
 	   "OSM": osmMap,
-	   "Mapa topo": otmMap,
-	   "Szara mapa": gray_map,
+	   "mapa topo": otmMap,
+	   "mapa szara": gray_map,
 	    };
 
 	//określnie warstw i stylizacji w legendzie interaktywnej
@@ -500,7 +501,7 @@
 	"<img src ='./green_c.svg' width='18px'> od 1793 do 1919 roku": lata_1793_1919,
 	"<img src ='./blue_c.svg' width='18px'> od 1501 do 1792 roku": lata_1501_1792,
 	"<img src ='./red_c.svg' width='18px'> do 1500 roku": lata_do_1500,
-	"<img src ='./black_pc.svg' width='18px'> cmentarz istniejące obecnie": warstwa_cmentrze_bdot,
+	"<img src ='./black_pc.svg' width='18px'> cmentarze istniejące": warstwa_cmentrze_bdot,
 	"<img src ='./orange_pc.svg' width='18px'> cmentarz (Mapa SGWP 1956)": warstwa_mapa_sgwp_1956,
 	"<img src ='./green_pc.svg' width='18px'> cmentarz (Messtischblatt 1941-1944)": warstwa_messtischeblatt_1941_1944,
 	"<img src ='./blue_pc.svg' width='18px'> cmentarz (Mapa WIG 1933-1936)": warstwa_mapa_wig_1933_1936,
@@ -509,7 +510,7 @@
 	"<img src ='./darkred_pc.svg' width='18px'> działki ewidencyjne [EGIB]": dzialki_ewidencyjne_egib,
 	"mapa SGWP 1956 (1973)": poznan_raster3,
 	"mapa Messtischblatt 1941-1944": poznan_raster4,
-	"Mapa WIG 1933-1936": poznan_raster2,
+	"mapa WIG 1933-1936": poznan_raster2,
 	"mapa Messtischblatt 1911-1919": poznan_raster1,
 	"<img src ='./black_pp.svg' width='18px'> granica miasta w 2024 roku": warstwa_granica_poznan_2024,
 	"<img src ='./purple_pp.svg' width='18px'> granica miasta w 1986 roku": warstwa_granica_poznan_1986,
