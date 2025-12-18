@@ -36,6 +36,7 @@
 	<script src="./epidemiczny.js"></script>
 	<script src="./twierdza_poligonalna_poznan.js"></script>
 	<script src="./twierdza_fortowa_poznan.js"></script>
+	<script src="./mury_miejskie_poznan.js"></script>
 	<script src="./cmentrze_bdot.js"></script>
 	<script src="./granica_poznan_1925.js"></script>
 	<script src="./granica_poznan_1933.js"></script>
@@ -452,6 +453,7 @@
 	var warstwa_cmentrze_bdot = L.geoJson(cmentrze_bdot, {color: 'black', weight:'2', fillOpacity: '0'}).addTo(map);
 	var warstwa_twierdza_poligonalna_poznan = L.geoJson(twierdza_poligonalna_poznan, {color: 'darkred',weight:'1', fillOpacity:'0.5' });
 	var warstwa_twierdza_fortowa_poznan = L.geoJson(twierdza_fortowa_poznan, {color: 'darkred',weight:'1', fillOpacity:'0.5' });
+	var warstwa_mury_miejskie_poznan = L.geoJson(mury_miejskie_poznan, {color: 'darkred',weight:'2', fillOpacity:'0.5' });
 	var warstwa_granica_poznan_2024 = L.geoJson(granica_poznan_2024, {color: 'black', fillOpacity: '0', dashArray: '10,10'}).addTo(map);
 	var warstwa_granica_poznan_1986 = L.geoJson(granica_poznan_1986, {color: 'purple', fillOpacity: '0', dashArray: '10,10'});
 	var warstwa_granica_poznan_1973 = L.geoJson(granica_poznan_1973, {color: 'orange', fillOpacity: '0', dashArray: '10,10'});
@@ -506,8 +508,8 @@
 	"<img src ='./green_pc.svg' width='18px'> cmentarz (Messtischblatt 1941-1944)": warstwa_messtischeblatt_1941_1944,
 	"<img src ='./blue_pc.svg' width='18px'> cmentarz (Mapa WIG 1933-1936)": warstwa_mapa_wig_1933_1936,
 	"<img src ='./red_pc.svg' width='18px'> cmentarz (Messtischblatt 1911-1919)": warstwa_messtischeblatt_1911_1919,
-	"<img src ='./darkred_pp.svg' width='18px'> granica cmentarza [EGIB]": granica_cmentarza_egib,
-	"<img src ='./darkred_pc.svg' width='18px'> działki ewidencyjne [EGIB]": dzialki_ewidencyjne_egib,
+	"<img src ='./darkred_pp.svg' width='18px'> granica cmentarza [EGiB]": granica_cmentarza_egib,
+	"<img src ='./darkred_pc.svg' width='18px'> działki ewidencyjne [EGiB]": dzialki_ewidencyjne_egib,
 	"mapa SGWP 1956 (1973)": poznan_raster3,
 	"mapa Messtischblatt 1941-1944": poznan_raster4,
 	"mapa WIG 1933-1936": poznan_raster2,
@@ -518,8 +520,9 @@
 	"<img src ='./green_pp.svg' width='18px'> granica miasta w 1940 roku": warstwa_granica_poznan_1940,
 	"<img src ='./blue_pp.svg' width='18px'> granica miasta w 1933 roku": warstwa_granica_poznan_1933,
 	"<img src ='./red_pp.svg' width='18px'> granica miasta w 1925 roku": warstwa_granica_poznan_1925,
-	"<img src ='./twierdza.svg' width='18px'> twierdza poligonalna": warstwa_twierdza_poligonalna_poznan,
-	"<img src ='./twierdza.svg' width='18px'> twierdza fortowa": warstwa_twierdza_fortowa_poznan,
+	"<img src ='./twierdza.svg' width='18px'> mury miejskie": warstwa_mury_miejskie_poznan,
+	"<img src ='./twierdza.svg' width='18px'> twierdza poligonalna [GEOPOZ]": warstwa_twierdza_poligonalna_poznan,
+	"<img src ='./twierdza.svg' width='18px'> twierdza fortowa [GEOPOZ]": warstwa_twierdza_fortowa_poznan,
 	};
 	
 
