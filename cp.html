@@ -269,8 +269,8 @@
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 	});
 
-	//szara mapa - mapa startowa
-	var gray_map = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+	//szara mapa - mapa startowa tymczasowe odlaczenie szarej mapy db
+	var osmMap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
 	}).addTo(map);
 
@@ -485,7 +485,7 @@
 	var baseLayers = {
 	   "OSM": osmMap,
 	   "mapa topo": otmMap,
-	   "mapa szara": gray_map,
+	   //"mapa szara": gray_map,
 	    };
 
 	//określnie warstw i stylizacji w legendzie interaktywnej
