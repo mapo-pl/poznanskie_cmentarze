@@ -14,6 +14,11 @@
 	background-color: lightgray;
 	}
 
+	.szara-mapa .leaflet-tile {
+            filter: grayscale(100%);
+			-web-filter: grayscale( 100%);
+	}
+
 	</style>
     
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -250,29 +255,27 @@
 	
  
 	//mapy bazowe
-	var osmLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>',
-     otmLink = '<a href="http://opentopomap.org/">OpenTopoMap</a>',
-	 gray_mapLink = '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+	var osm_szaryLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>',
+     osm_kolorLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
         
-   var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-       osmAttrib = '&copy; ' + osmLink + ' Contributors',
-       otmUrl = 'http://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
-       otmAttrib = '&copy; '+otmLink+' Contributors',
-	   gray_mapUrl = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
-       gray_mapAttrib = '&copy; '+gray_mapLink+' Contributors';
+   var osm_szaryUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+       osm_szaryAttrib = '&copy; ' + osm_szaryLink + ' Contributors',
+       osm_kolorUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+       osm_kolorAttrib = '&copy; '+osm_kolorLink+' Contributors';
   
-   var osmMap = L.tileLayer(osmUrl, {attribution: osmAttrib}),
-       otmMap = L.tileLayer(otmUrl, {attribution: otmAttrib}),
-		gray_mapMap = L.tileLayer(gray_mapUrl, {attribution: gray_mapAttrib});
+   var osm_szaryMap = L.tileLayer(osm_szaryUrl, {attribution: osm_szaryAttrib}),
+       osm_kolorMap = L.tileLayer(osm_kolorUrl, {attribution: osm_kolorAttrib});
 
 	var podklad = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 	});
 
-	//szara mapa - mapa startowa tymczasowe odlaczenie szarej mapy db
-	var osmMap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+	//szara mapa - mapa startowa
+	var osm_szaryMap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy;',
+			className:'szara-mapa'
 	}).addTo(map);
+
 
     const screenWidth = window.innerWidth; //window.screen.width;
 	
@@ -483,10 +486,10 @@
 	
 	// określenie map bazowych i nazw w legendzie interaktywnej
 	var baseLayers = {
-	   "OSM": osmMap,
-	   "mapa topo": otmMap,
-	   //"mapa szara": gray_map,
-	    };
+	   "OSM SZARY": osm_szaryMap,
+	   "OSM KOLOR": osm_kolorMap,
+	 };
+
 
 	//określnie warstw i stylizacji w legendzie interaktywnej
 	var overlays = {
